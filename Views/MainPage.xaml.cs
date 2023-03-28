@@ -1,6 +1,6 @@
-﻿namespace NbaStatsMaui;
+﻿namespace NbaStatsMaui.Views;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : BaseContentPage
 {
 	int count = 0;
 
