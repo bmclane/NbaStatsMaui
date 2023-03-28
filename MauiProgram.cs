@@ -22,7 +22,9 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		RegisterAppServices(builder.Services);
+        Sharpnado.TaskLoaderView.Initializer.Initialize(true); // logger enabled
+
+        RegisterAppServices(builder.Services);
 
 		return builder.Build();
 	}
