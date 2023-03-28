@@ -22,6 +22,13 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+		RegisterAppServices(builder.Services);
+
 		return builder.Build();
+	}
+
+	private static void RegisterAppServices(IServiceCollection services)
+	{
+		services.AddSingleton<INbaApiService, NbaApiService>();
 	}
 }

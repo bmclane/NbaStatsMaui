@@ -23,9 +23,17 @@ namespace NbaStatsMaui.ViewModels
             private set => SetProperty(ref _isBusy, value);
         }
 
-        public BaseViewModel()
+        public INbaApiService NbaApiService
         {
+            get;
+            private set;
         }
+
+        public BaseViewModel(INbaApiService nbaApiService)
+        {
+            NbaApiService = nbaApiService;
+        }
+
         public virtual Task InitializeAsync()
         {
             return Task.CompletedTask;

@@ -1,0 +1,10 @@
+﻿global using CommunityToolkit.Maui;
+global using NbaStatsMaui.Models;
+global using NbaStatsMaui.ViewModels;
+global using NbaStatsMaui.Interfaces;
+global using NbaStatsMaui.Services;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using System.Threading.Tasks;
