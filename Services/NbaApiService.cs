@@ -17,14 +17,33 @@ public class NbaApiService : INbaApiService
 
     }
 
+    public async Task<ApiResponse<Team>> GetTeams()
+    {
+        return await httpClient.GetFromJsonAsync<ApiResponse<Team>>(ServerUrl + $"teams");
+    }
+    public async Task<ApiResponse<Player>> GetPlayers(int page = 0)
+    {
+        return await httpClient.GetFromJsonAsync<ApiResponse<Player>>(ServerUrl + $"players?page={page}&per_page=100");
+    }
+
+    public async Task<ApiResponse<List<GameStats>>> GetPlayerStats(Player player, int page = 0)
+    {
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?player_ids[]={player.Id}page={page}&per_page=100");
+    }
+
     public async Task<ApiResponse<List<GameStats>>> GetGameStats(Game game)
     {
         return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?game_ids[]={game.Id}");
     }
 
-    public async Task<ApiResponse<List<Game>>> GetScheduleForDate(DateTime date)
+    public async Task <ApiResponse<List<Game>>> GetTeamSchedule(Team team)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?dates[]={date.ToString("yyyy-MM-dd")}");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?seasons[]=2022per_page=100&team_ids[]={team.Id}");
+    }
+
+    public async Task<ApiResponse<List<Game>>> GetRecentSchedule(DateTime date)
+    {
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?per_page=100&start_date={FormatDate(date.AddDays(-7))}&end_date={FormatDate(date.AddDays(7))}");
     }
 
     protected virtual HttpClient GetHttpClient()
@@ -34,5 +53,10 @@ public class NbaApiService : INbaApiService
         client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
 
         return client;
+    }
+
+    private string FormatDate(DateTime date)
+    {
+        return date.ToString("yyyy-MM-dd");
     }
 }

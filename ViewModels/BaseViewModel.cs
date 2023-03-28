@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using NbaStatsMaui.Interfaces;
-
-namespace NbaStatsMaui.ViewModels;
+﻿namespace NbaStatsMaui.ViewModels;
 
 public partial class BaseViewModel : ObservableObject, IBaseViewModel
 {
