@@ -5,10 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NbaStatsMaui.Views"
     Shell.FlyoutBehavior="Disabled">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:SchedulePage}"
-        Route="MainPage" />
-
+    <TabBar>
+        <Tab Title="Sched" Icon="sched.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SchedulePage}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Teams" Icon="team.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TeamsPage}" Route="TeamsPage" />
+        </Tab>
+        <Tab Title="Players" Icon="player.png">
+            <ShellContent ContentTemplate="{DataTemplate local:PlayersPage}" Route="PlayersPage" />
+        </Tab>
+    </TabBar>
 </Shell>

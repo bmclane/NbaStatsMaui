@@ -73,9 +73,12 @@
 	  <None Remove="Resources\Images\orl.svg" />
 	  <None Remove="Resources\Images\phi.svg" />
 	  <None Remove="Resources\Images\phx.svg" />
+	  <None Remove="Resources\Images\player.svg" />
 	  <None Remove="Resources\Images\por.svg" />
 	  <None Remove="Resources\Images\sac.svg" />
 	  <None Remove="Resources\Images\sas.svg" />
+	  <None Remove="Resources\Images\sched.svg" />
+	  <None Remove="Resources\Images\team.svg" />
 	  <None Remove="Resources\Images\tor.svg" />
 	  <None Remove="Resources\Images\uta.svg" />
 	  <None Remove="Resources\Images\was.svg" />
@@ -90,10 +93,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\PlayersPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SchedulePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SkeletonViews\ScheduleRowView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TeamsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -22,17 +22,16 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-        Sharpnado.TaskLoaderView.Initializer.Initialize(true); // logger enabled
-
+        Sharpnado.TaskLoaderView.Initializer.Initialize(false);
 
         builder.Services.AddSingleton<INbaApiService, NbaApiService>();
         builder.Services.AddSingleton<ScheduleViewModel>();
         builder.Services.AddSingleton<SchedulePage>();
+        builder.Services.AddSingleton<TeamsViewModel>();
+        builder.Services.AddSingleton<TeamsPage>();
+        builder.Services.AddSingleton<PlayersViewModel>();
+        builder.Services.AddSingleton<PlayersPage>();
 
         return builder.Build();
-	}
-
-	private static void RegisterAppServices(IServiceCollection services)
-	{
 	}
 }
