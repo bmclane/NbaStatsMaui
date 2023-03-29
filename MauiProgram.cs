@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using NbaStatsMaui.Views;
 
 namespace NbaStatsMaui;
 
@@ -24,13 +24,15 @@ public static class MauiProgram
 
         Sharpnado.TaskLoaderView.Initializer.Initialize(true); // logger enabled
 
-        RegisterAppServices(builder.Services);
 
-		return builder.Build();
+        builder.Services.AddSingleton<INbaApiService, NbaApiService>();
+        builder.Services.AddSingleton<ScheduleViewModel>();
+        builder.Services.AddSingleton<SchedulePage>();
+
+        return builder.Build();
 	}
 
 	private static void RegisterAppServices(IServiceCollection services)
 	{
-		services.AddSingleton<INbaApiService, NbaApiService>();
 	}
 }

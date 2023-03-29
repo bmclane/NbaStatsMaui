@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:NbaStatsMaui.Views"
+    xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
+    xmlns:m="clr-namespace:NbaStatsMaui.Models"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:skeletonViews="clr-namespace:NbaStatsMaui.Views.SkeletonViews"
+    xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="NbaStatsMaui.Views.SchedulePage"
+    Title="Schedule"
+    x:DataType="vm:ScheduleViewModel">
+    <ContentPage.Resources>
+
+        <toolkit:EnumToBoolConverter x:Key="ActiveCompletedConverter">
+            <toolkit:EnumToBoolConverter.TrueValues>
+                <m:GameStatus>Active</m:GameStatus>
+                <m:GameStatus>Completed</m:GameStatus>
+            </toolkit:EnumToBoolConverter.TrueValues>
+        </toolkit:EnumToBoolConverter>
+
+        <toolkit:EnumToBoolConverter x:Key="PregameActiveConverter">
+            <toolkit:EnumToBoolConverter.TrueValues>
+                <m:GameStatus>Active</m:GameStatus>
+                <m:GameStatus>Pregame</m:GameStatus>
+            </toolkit:EnumToBoolConverter.TrueValues>
+        </toolkit:EnumToBoolConverter>
+
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="DefaultLabelStyle" TargetType="Label">
+            <Setter Property="sk:Skeleton.IsBusy" Value="{Binding TaskLoaderNotifier.ShowLoader, Source={x:Reference GamesTaskLoader}}" />
+            <Setter Property="sk:Skeleton.BackgroundColor" Value="{StaticResource Gray300}" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+            <Setter Property="FontSize" Value="Large" />
+        </Style>
+
+        <Style
+            x:Key="DateLabelStyle"
+            TargetType="Label">
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        </Style>
+
+        <Style x:Key="DateGridStyle" TargetType="Grid">
+            <Setter Property="HeightRequest" Value="60" />
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="ColumnDefinitions" Value="100" />
+            <Setter Property="RowDefinitions" Value="55,5" />
+        </Style>
+
+        <Style
+            x:Key="TeamNameLabelStyle"
+            TargetType="Label"
+            BasedOn="{StaticResource DefaultLabelStyle}">
+            <Setter Property="MinimumWidthRequest" Value="250" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Start" />
+        </Style>
+
+        <Style
+            x:Key="ScoreLabelStyle"
+            TargetType="Label"
+            BasedOn="{StaticResource DefaultLabelStyle}">
+            <Setter Property="MinimumWidthRequest" Value="40" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+
+        <Style
+            x:Key="StatusLabelStyle"
+            TargetType="Label"
+            BasedOn="{StaticResource DefaultLabelStyle}">
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="HorizontalTextAlignment" Value="End" />
+        </Style>
+
+        <Style x:Key="ScoreFlexLayoutStyle" TargetType="FlexLayout">
+            <Setter Property="Direction" Value="Row" />
+            <Setter Property="JustifyContent" Value="SpaceBetween" />
+            <Setter Property="Wrap" Value="NoWrap" />
+            <Setter Property="HeightRequest" Value="35" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+        </Style>
+
+        <Style x:Key="ViewBorderStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark={StaticResource Tertiary}}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+            <Setter Property="StrokeThickness" Value="{AppThemeBinding Light=1, Dark=0}" />
+            <Setter Property="Padding" Value="6" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="Margin" Value="0,5,0,5" />
+        </Style>
+
+        <Style x:Key="ImageStyle" TargetType="Image">
+            <Setter Property="Aspect" Value="Fill" />
+            <Setter Property="HeightRequest" Value="35" />
+            <Setter Property="WidthRequest" Value="35" />
+        </Style>
+
+        <DataTemplate x:Key="ScheduleViewCell">
+            <ViewCell>
+                <Border Style="{StaticResource ViewBorderStyle}">
+                    <StackLayout x:DataType="m:Game" VerticalOptions="CenterAndExpand">
+                        <Label
+                            Style="{StaticResource StatusLabelStyle}"
+                            Text="{Binding Status}"
+                            IsVisible="{Binding GameStatus, Converter={StaticResource PregameActiveConverter}}" />
+                        <FlexLayout Style="{StaticResource ScoreFlexLayoutStyle}">
+                            <HorizontalStackLayout>
+                                <Image Source="{Binding VisitorTeam.ImageName}" Style="{StaticResource ImageStyle}" />
+                                <Label Style="{StaticResource TeamNameLabelStyle}" Text="{Binding VisitorTeam.FullName}" />
+                            </HorizontalStackLayout>
+                            <Label
+                                IsVisible="{Binding GameStatus, Converter={StaticResource ActiveCompletedConverter}}"
+                                Style="{StaticResource ScoreLabelStyle}"
+                                Text="{Binding VisitorTeamScore}" />
+                        </FlexLayout>
+                        <FlexLayout Style="{StaticResource ScoreFlexLayoutStyle}">
+                            <HorizontalStackLayout>
+                                <Image Source="{Binding HomeTeam.ImageName}" Style="{StaticResource ImageStyle}" />
+                                <Label Style="{StaticResource TeamNameLabelStyle}" Text="{Binding HomeTeam.FullName}" />
+                            </HorizontalStackLayout>
+                            <Label
+                                IsVisible="{Binding GameStatus, Converter={StaticResource ActiveCompletedConverter}}"
+                                Style="{StaticResource ScoreLabelStyle}"
+                                Text="{Binding HomeTeamScore}" />
+                        </FlexLayout>
+                    </StackLayout>
+                </Border>
+            </ViewCell>
+        </DataTemplate>
+
+        <Style TargetType="ListView">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="Header" Value="" />
+            <Setter Property="HasUnevenRows" Value="True" />
+            <Setter Property="SelectionMode" Value="None" />
+            <Setter Property="SeparatorVisibility" Value="None" />
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="ItemTemplate" Value="{StaticResource ScheduleViewCell}" />
+            <Setter Property="ItemsSource" Value="{Binding Loader.Result}" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+        </Style>
+
+        <Style x:Key="DateCollectionViewStyle" TargetType="CollectionView">
+            <Setter Property="ItemsSource" Value="{Binding Dates}" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="SelectedItem" Value="{Binding SelectedDate}" />
+            <Setter Property="ItemSizingStrategy" Value="{OnPlatform iOS='MeasureFirstItem'}" />
+            <Setter Property="ItemsLayout" Value="HorizontalList" />
+            <Setter Property="HeightRequest" Value="60" />
+        </Style>
+
+    </ContentPage.Resources>
+    <Grid
+        ColumnDefinitions="*"
+        RowDefinitions="60,*"
+        IgnoreSafeArea="{OnPlatform iOS='True'}">
+        <CollectionView
+            Style="{StaticResource DateCollectionViewStyle}"
+            Grid.Row="0"
+            Grid.Column="0"
+            x:Name="dateCollectionView"
+            SelectionChanged="CollectionViewExtended_SelectionChanged">
+            <CollectionView.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="SelectionChanged" />
+            </CollectionView.Behaviors>
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="m:ModelDate">
+                    <Grid Style="{StaticResource DateGridStyle}">
+                        <BoxView
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Color="White" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource DateLabelStyle}"
+                            Text="{Binding Date, StringFormat='{0:MMM d}'}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+        <taskLoader:TemplatedTaskLoader
+            x:Name="GamesTaskLoader"
+            TaskLoaderNotifier="{Binding Loader}"
+            Grid.Row="1"
+            Grid.Column="0">
+            <taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
+                <ControlTemplate>
+                    <StackLayout Margin="{OnPlatform Android='0,20,0,0', iOS='10,0,10,0'}">
+                        <skeletonViews:ScheduleRowView />
+                        <skeletonViews:ScheduleRowView />
+                        <skeletonViews:ScheduleRowView />
+                        <skeletonViews:ScheduleRowView />
+                        <skeletonViews:ScheduleRowView />
+                    </StackLayout>
+                </ControlTemplate>
+            </taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
+            <taskLoader:TemplatedTaskLoader.ResultControlTemplate>
+                <ControlTemplate>
+                    <ContentView BindingContext="{Binding Source={RelativeSource AncestorType={x:Type vm:ScheduleViewModel}}}" CompressedLayout.IsHeadless="True">
+                        <RefreshView
+                            IsRefreshing="{Binding Loader.ShowRefresher}"
+                            Command="{Binding Loader.RefreshCommand}"
+                            Margin="0,0,0,0">
+                            <ListView CachingStrategy="RecycleElementAndDataTemplate" />
+                        </RefreshView>
+                    </ContentView>
+                </ControlTemplate>
+            </taskLoader:TemplatedTaskLoader.ResultControlTemplate>
+        </taskLoader:TemplatedTaskLoader>
+    </Grid>
+</views:BaseContentPage>

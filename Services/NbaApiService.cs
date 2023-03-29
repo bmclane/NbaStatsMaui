@@ -26,9 +26,9 @@ public class NbaApiService : INbaApiService
         return await httpClient.GetFromJsonAsync<ApiResponse<Player>>(ServerUrl + $"players?page={page}&per_page=100");
     }
 
-    public async Task<ApiResponse<List<GameStats>>> GetPlayerStats(Player player, int page = 0)
+    public async Task<ApiResponse<List<GameStats>>> GetPlayerStats(Player player, int page = 0, int season = 2022)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?player_ids[]={player.Id}page={page}&per_page=100");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?seasons[]={season}&player_ids[]={player.Id}page={page}&per_page=100");
     }
 
     public async Task<ApiResponse<List<GameStats>>> GetGameStats(Game game)
@@ -36,14 +36,14 @@ public class NbaApiService : INbaApiService
         return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?game_ids[]={game.Id}");
     }
 
-    public async Task <ApiResponse<List<Game>>> GetTeamSchedule(Team team)
+    public async Task <ApiResponse<List<Game>>> GetTeamSchedule(Team team, int season = 2022)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?seasons[]=2022per_page=100&team_ids[]={team.Id}");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?seasons[]={season}&team_ids[]={team.Id}&per_page=100");
     }
 
-    public async Task<ApiResponse<List<Game>>> GetRecentSchedule(DateTime date)
+    public async Task<ApiResponse<List<Game>>> GetGames(DateTime date)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?per_page=100&start_date={FormatDate(date.AddDays(-7))}&end_date={FormatDate(date.AddDays(7))}");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Game>>>(ServerUrl + $"games?dates[]={FormatDate(date)}&per_page=100");
     }
 
     protected virtual HttpClient GetHttpClient()

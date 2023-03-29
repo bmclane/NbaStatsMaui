@@ -5,7 +5,6 @@ public partial class BaseViewModel : ObservableObject, IBaseViewModel
     [ObservableProperty]
     bool isInitialized;
 
-
     public INbaApiService NbaApiService
     {
         get;
