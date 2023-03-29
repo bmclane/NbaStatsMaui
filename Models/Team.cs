@@ -23,4 +23,7 @@ public class Team
     [JsonPropertyName("name")]
     public string Name { get; set; }
 
+    [JsonIgnore]
+    public string ImageName => $"{Abbreviation.ToLower()}.png";
+
 }

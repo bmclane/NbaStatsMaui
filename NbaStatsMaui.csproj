@@ -49,6 +49,39 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\atl.svg" />
+	  <None Remove="Resources\Images\bkn.svg" />
+	  <None Remove="Resources\Images\bos.svg" />
+	  <None Remove="Resources\Images\cha.svg" />
+	  <None Remove="Resources\Images\chi.svg" />
+	  <None Remove="Resources\Images\cle.svg" />
+	  <None Remove="Resources\Images\dal.svg" />
+	  <None Remove="Resources\Images\den.svg" />
+	  <None Remove="Resources\Images\det.svg" />
+	  <None Remove="Resources\Images\gsw.svg" />
+	  <None Remove="Resources\Images\hou.svg" />
+	  <None Remove="Resources\Images\ind.svg" />
+	  <None Remove="Resources\Images\lac.svg" />
+	  <None Remove="Resources\Images\lal.svg" />
+	  <None Remove="Resources\Images\mem.svg" />
+	  <None Remove="Resources\Images\mia.svg" />
+	  <None Remove="Resources\Images\mil.svg" />
+	  <None Remove="Resources\Images\min.svg" />
+	  <None Remove="Resources\Images\nop.svg" />
+	  <None Remove="Resources\Images\nyk.svg" />
+	  <None Remove="Resources\Images\okc.svg" />
+	  <None Remove="Resources\Images\orl.svg" />
+	  <None Remove="Resources\Images\phi.svg" />
+	  <None Remove="Resources\Images\phx.svg" />
+	  <None Remove="Resources\Images\por.svg" />
+	  <None Remove="Resources\Images\sac.svg" />
+	  <None Remove="Resources\Images\sas.svg" />
+	  <None Remove="Resources\Images\tor.svg" />
+	  <None Remove="Resources\Images\uta.svg" />
+	  <None Remove="Resources\Images\was.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
