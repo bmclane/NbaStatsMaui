@@ -2,13 +2,110 @@
 <views:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:NbaStatsMaui.Helpers"
     xmlns:views="clr-namespace:NbaStatsMaui.Views"
+    xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
+    xmlns:m="clr-namespace:NbaStatsMaui.Models"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:skeletonViews="clr-namespace:NbaStatsMaui.Views.SkeletonViews"
+    xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
     x:Class="NbaStatsMaui.Views.TeamsPage"
-    Title="TeamsPage">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    Title="Teams"
+    x:DataType="vm:ScheduleViewModel">
+    <ContentPage.Resources>
+        <Style TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Transparent" />
+            <Setter Property="Fill" Value="{StaticResource Gray200}" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style TargetType="RoundRectangle">
+            <Setter Property="Fill" Value="{StaticResource Gray200}" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="sk:Skeleton.BackgroundColor" Value="{StaticResource Gray300}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+    <taskLoader:TemplatedTaskLoader x:Name="GamesTaskLoader" TaskLoaderNotifier="{Binding Loader}">
+        <taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
+            <ControlTemplate>
+                <CollectionView ItemsSource="{Static helpers:Skeletons.Teams}" Margin="0,0,0,80">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:Team">
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0" />
+                                <Ellipse Grid.Row="0" Grid.Column="0" />
+                                <RoundRectangle
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,10" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ControlTemplate>
+        </taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
+        <taskLoader:TemplatedTaskLoader.ResultControlTemplate>
+            <ControlTemplate>
+                <CollectionView
+                    ItemsSource="{Binding Loader.Result}"
+                    Margin="0,0,0,0"
+                    BindingContext="{Binding Source={RelativeSource AncestorType={x:Type vm:TeamsViewModel}}}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:Team">
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0" />
+                                <Image
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Source="{Binding ImageName}"
+                                    Aspect="AspectFit"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    HorizontalOptions="Center" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="{Binding Abbreviation}"
+                                    FontAttributes="Bold"
+                                    LineBreakMode="TailTruncation"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Margin="0,0,0,10" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ControlTemplate>
+        </taskLoader:TemplatedTaskLoader.ResultControlTemplate>
+    </taskLoader:TemplatedTaskLoader>
 </views:BaseContentPage>
