@@ -7,7 +7,6 @@ public abstract class BaseContentPage : ContentPage
 {
     public BaseContentPage()
     {
-        On<iOS>().SetUseSafeArea(false);
     }
 
     protected override async void OnAppearing()

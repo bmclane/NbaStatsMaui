@@ -28,30 +28,13 @@
             </toolkit:EnumToBoolConverter.TrueValues>
         </toolkit:EnumToBoolConverter>
 
-        <Style TargetType="Grid">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Selected">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
         <Style x:Key="DefaultLabelStyle" TargetType="Label">
             <Setter Property="sk:Skeleton.IsBusy" Value="{Binding TaskLoaderNotifier.ShowLoader, Source={x:Reference GamesTaskLoader}}" />
             <Setter Property="sk:Skeleton.BackgroundColor" Value="{StaticResource Gray300}" />
-            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
             <Setter Property="FontSize" Value="Large" />
         </Style>
 
-        <Style
-            x:Key="DateLabelStyle"
-            TargetType="Label">
+        <Style x:Key="DateLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="Small" />
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Center" />
@@ -97,29 +80,19 @@
         <Style x:Key="ScoreFlexLayoutStyle" TargetType="FlexLayout">
             <Setter Property="Direction" Value="Row" />
             <Setter Property="JustifyContent" Value="SpaceBetween" />
-            <Setter Property="Wrap" Value="NoWrap" />
             <Setter Property="HeightRequest" Value="35" />
             <Setter Property="HorizontalOptions" Value="Fill" />
         </Style>
 
-        <Style x:Key="ViewBorderStyle" TargetType="Border">
-            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark={StaticResource Tertiary}}" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 8" />
-            <Setter Property="StrokeThickness" Value="{AppThemeBinding Light=1, Dark=0}" />
-            <Setter Property="Padding" Value="6" />
-            <Setter Property="HorizontalOptions" Value="Fill" />
-            <Setter Property="Margin" Value="0,5,0,5" />
-        </Style>
-
-        <Style x:Key="ImageStyle" TargetType="Image">
-            <Setter Property="Aspect" Value="Fill" />
+        <Style TargetType="Image">
+            <Setter Property="Aspect" Value="AspectFit" />
             <Setter Property="HeightRequest" Value="35" />
             <Setter Property="WidthRequest" Value="35" />
         </Style>
 
         <DataTemplate x:Key="ScheduleViewCell">
             <ViewCell>
-                <Border Style="{StaticResource ViewBorderStyle}">
+                <Border Margin="10,5,10,5">
                     <StackLayout x:DataType="m:Game" VerticalOptions="CenterAndExpand">
                         <Label
                             Style="{StaticResource StatusLabelStyle}"
@@ -127,7 +100,7 @@
                             IsVisible="{Binding GameStatus, Converter={StaticResource PregameActiveConverter}}" />
                         <FlexLayout Style="{StaticResource ScoreFlexLayoutStyle}">
                             <HorizontalStackLayout>
-                                <Image Source="{Binding VisitorTeam.ImageName}" Style="{StaticResource ImageStyle}" />
+                                <Image Source="{Binding VisitorTeam.ImageName}" />
                                 <Label Style="{StaticResource TeamNameLabelStyle}" Text="{Binding VisitorTeam.FullName}" />
                             </HorizontalStackLayout>
                             <Label
@@ -137,7 +110,7 @@
                         </FlexLayout>
                         <FlexLayout Style="{StaticResource ScoreFlexLayoutStyle}">
                             <HorizontalStackLayout>
-                                <Image Source="{Binding HomeTeam.ImageName}" Style="{StaticResource ImageStyle}" />
+                                <Image Source="{Binding HomeTeam.ImageName}" />
                                 <Label Style="{StaticResource TeamNameLabelStyle}" Text="{Binding HomeTeam.FullName}" />
                             </HorizontalStackLayout>
                             <Label
@@ -150,23 +123,10 @@
             </ViewCell>
         </DataTemplate>
 
-        <Style TargetType="ListView">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="Header" Value="" />
-            <Setter Property="HasUnevenRows" Value="True" />
-            <Setter Property="SelectionMode" Value="None" />
-            <Setter Property="SeparatorVisibility" Value="None" />
-            <Setter Property="Margin" Value="10,0,10,0" />
-            <Setter Property="ItemTemplate" Value="{StaticResource ScheduleViewCell}" />
-            <Setter Property="ItemsSource" Value="{Binding Loader.Result}" />
-            <Setter Property="VerticalScrollBarVisibility" Value="Never" />
-        </Style>
-
         <Style x:Key="DateCollectionViewStyle" TargetType="CollectionView">
             <Setter Property="ItemsSource" Value="{Binding Dates}" />
             <Setter Property="SelectionMode" Value="Single" />
             <Setter Property="SelectedItem" Value="{Binding SelectedDate}" />
-            <Setter Property="ItemSizingStrategy" Value="{OnPlatform iOS='MeasureFirstItem'}" />
             <Setter Property="ItemsLayout" Value="HorizontalList" />
             <Setter Property="HeightRequest" Value="60" />
         </Style>
@@ -181,23 +141,37 @@
             Grid.Row="0"
             Grid.Column="0"
             x:Name="dateCollectionView"
+            ItemSizingStrategy="{OnPlatform iOS='MeasureFirstItem',
+                                            Android='MeasureAllItems'}"
             SelectionChanged="CollectionViewExtended_SelectionChanged">
             <CollectionView.Behaviors>
                 <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="SelectionChanged" />
+                <toolkit:EventToCommandBehavior Command="{Binding DateChangedCommand}" EventName="SelectionChanged" />
             </CollectionView.Behaviors>
             <CollectionView.ItemTemplate>
 
                 <DataTemplate x:DataType="m:ModelDate">
                     <Grid Style="{StaticResource DateGridStyle}">
-                        <BoxView
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Color="White" />
                         <Label
                             Grid.Row="0"
                             Grid.Column="0"
                             Style="{StaticResource DateLabelStyle}"
                             Text="{Binding Date, StringFormat='{0:MMM d}'}" />
+                        <BoxView
+                            IsVisible="{Binding IsSelected}"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Color="{StaticResource Tertiary}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light='White', Dark='Black'}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -210,8 +184,7 @@
             Grid.Column="0">
             <taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
                 <ControlTemplate>
-                    <StackLayout Margin="{OnPlatform Android='0,20,0,0', iOS='10,0,10,0'}">
-                        <skeletonViews:ScheduleRowView />
+                    <StackLayout Margin="{OnPlatform Android='10,20,10,0', iOS='10,0,10,0'}">
                         <skeletonViews:ScheduleRowView />
                         <skeletonViews:ScheduleRowView />
                         <skeletonViews:ScheduleRowView />
@@ -226,7 +199,10 @@
                             IsRefreshing="{Binding Loader.ShowRefresher}"
                             Command="{Binding Loader.RefreshCommand}"
                             Margin="0,0,0,0">
-                            <ListView CachingStrategy="RecycleElementAndDataTemplate" />
+                            <ListView
+                                CachingStrategy="RecycleElementAndDataTemplate"
+                                ItemTemplate="{StaticResource ScheduleViewCell}"
+                                ItemsSource="{Binding Loader.Result}" />
                         </RefreshView>
                     </ContentView>
                 </ControlTemplate>

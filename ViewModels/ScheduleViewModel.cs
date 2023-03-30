@@ -1,4 +1,6 @@
-﻿using Sharpnado.TaskLoaderView;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using Sharpnado.TaskLoaderView;
+using System.Collections.ObjectModel;
 
 namespace NbaStatsMaui.ViewModels;
 
@@ -6,15 +8,33 @@ public partial class ScheduleViewModel : BaseViewModel
 {
 
     [ObservableProperty]
-    public List<ModelDate> dates = GetDateRange(DateTime.Now.AddDays(-7), DateTime.Now.AddDays(7)).ToList();
+    public ObservableCollection<ModelDate> dates;
 
     [ObservableProperty]
     public ModelDate selectedDate;
+
+    [RelayCommand]
+    void DateChanged()
+    {
+        foreach (var dateSelected in Dates)
+        {
+            if (dateSelected.Equals(SelectedDate))
+            {
+                dateSelected.IsSelected = true;
+            }
+            else
+            {
+                dateSelected.IsSelected = false;
+            }
+        }
+    }
 
     public TaskLoaderNotifier<List<Game>> Loader { get; }
 
     public ScheduleViewModel(INbaApiService apiService) : base(apiService)
     {
+        Dates = GetDateRange(DateTime.Now.AddDays(-7), DateTime.Now.AddDays(7)).ToObservableCollection();
+        
         Loader = new TaskLoaderNotifier<List<Game>>(LoadData);
     }
 
@@ -25,6 +45,7 @@ public partial class ScheduleViewModel : BaseViewModel
         SelectedDate = Dates[7];
         
         Loader.Load();
+
         await base.InitializeAsync();
     }
 

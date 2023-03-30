@@ -17,13 +17,13 @@ public class NbaApiService : INbaApiService
 
     }
 
-    public async Task<ApiResponse<Team>> GetTeams()
+    public async Task<ApiResponse<List<Team>>> GetTeams()
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<Team>>(ServerUrl + $"teams");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Team>>>(ServerUrl + $"teams");
     }
-    public async Task<ApiResponse<Player>> GetPlayers(int page = 0)
+    public async Task<ApiResponse<List<Player>>> SearchPlayers(string text)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<Player>>(ServerUrl + $"players?page={page}&per_page=100");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<Player>>>(ServerUrl + $"players?search={text}&per_page=100");
     }
 
     public async Task<ApiResponse<List<GameStats>>> GetPlayerStats(Player player, int page = 0, int season = 2022)

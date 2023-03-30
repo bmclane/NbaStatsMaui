@@ -2,11 +2,11 @@
 
 public interface INbaApiService
 {
-    Task<ApiResponse<Player>> GetPlayers(int page = 0);
+    Task<ApiResponse<List<Player>>> SearchPlayers(string text);
 
     Task<ApiResponse<List<GameStats>>> GetPlayerStats(Player player, int page = 0, int season = 2022);
 
-    Task<ApiResponse<Team>> GetTeams();
+    Task<ApiResponse<List<Team>>> GetTeams();
 
     Task<ApiResponse<List<Game>>> GetTeamSchedule(Team team, int season = 2022);
 
