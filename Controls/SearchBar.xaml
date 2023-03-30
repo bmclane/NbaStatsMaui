@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:NbaStatsMaui.Controls"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    x:Class="NbaStatsMaui.Controls.SearchBar"
+    x:Name="_searchBarContentView">
+    <ContentView.Resources>
+
+        <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="WidthRequest" Value="20" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+
+    </ContentView.Resources>
+    <Border Margin="2,2,2,2">
+        <FlexLayout
+            x:Name="searchFlexLayout"
+            Direction="Row"
+            VerticalOptions="Center">
+            <Image
+                Margin="0,5,3,0"
+                HeightRequest="25"
+                WidthRequest="25"
+                Source="search.png"
+                VerticalOptions="Center" />
+            <controls:BorderlessEntry
+                ReturnType="Search"
+                FlexLayout.Grow="1"
+                FontSize="Medium"
+                HeightRequest="40"
+                Placeholder="{Binding Source={x:Reference _searchBarContentView}, Path=Placeholder}"
+                Text="{Binding Source={x:Reference _searchBarContentView}, Path=Text}"
+                TextChanged="Editor_TextChanged"
+                Keyboard="Text" />
+            <Image
+                x:Name="Clear"
+                Source="close.png"
+                HeightRequest="20"
+                WidthRequest="20"
+                Aspect="AspectFit"
+                Margin="0,0,2,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Clear_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+        </FlexLayout>
+    </Border>
+</ContentView>

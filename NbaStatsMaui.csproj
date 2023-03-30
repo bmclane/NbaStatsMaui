@@ -55,6 +55,7 @@
 	  <None Remove="Resources\Images\cha.svg" />
 	  <None Remove="Resources\Images\chi.svg" />
 	  <None Remove="Resources\Images\cle.svg" />
+	  <None Remove="Resources\Images\close.svg" />
 	  <None Remove="Resources\Images\dal.svg" />
 	  <None Remove="Resources\Images\den.svg" />
 	  <None Remove="Resources\Images\det.svg" />
@@ -78,6 +79,7 @@
 	  <None Remove="Resources\Images\sac.svg" />
 	  <None Remove="Resources\Images\sas.svg" />
 	  <None Remove="Resources\Images\sched.svg" />
+	  <None Remove="Resources\Images\search.svg" />
 	  <None Remove="Resources\Images\team.svg" />
 	  <None Remove="Resources\Images\tor.svg" />
 	  <None Remove="Resources\Images\uta.svg" />
@@ -93,6 +95,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\SearchBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PlayersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
