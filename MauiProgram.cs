@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using NbaStatsMaui.Views;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace NbaStatsMaui;
 
 public static class MauiProgram
