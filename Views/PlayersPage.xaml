@@ -2,13 +2,63 @@
 <views:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:NbaStatsMaui.Controls"
     xmlns:views="clr-namespace:NbaStatsMaui.Views"
+    xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
+    xmlns:m="clr-namespace:NbaStatsMaui.Models"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="NbaStatsMaui.Views.PlayersPage"
-    Title="PlayersPage">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    Title="Find Players"
+    x:DataType="vm:PlayersViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="PlayerLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+            <Setter Property="FontSize" Value="Medium" />
+        </Style>
+
+        <DataTemplate x:Key="PlayerViewCell">
+            <ViewCell>
+                <StackLayout
+                    x:DataType="m:Player"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="10,5,10,5">
+                    <Label Style="{StaticResource PlayerLabelStyle}" Text="{Binding FullName}" />
+                    <BoxView
+                        Margin="0,5,0,0"
+                        HeightRequest="1"
+                        BackgroundColor="Black" />
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto, *">
+        <!--<SearchBar
+            Grid.Row="0"
+            Grid.Column="0"
+            ios:SearchBar.SearchBarStyle="Minimal"
+            BackgroundColor="White"
+            Text="{Binding SearchText}"
+            SearchButtonPressed="SearchBar_SearchButtonPressed">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="TextChanged" />
+            </SearchBar.Behaviors>
+        </SearchBar>-->
+        <controls:SearchBar
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="{Binding SearchText}"
+            Placeholder="Search for Players">
+            <controls:SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="TextChanged" />
+            </controls:SearchBar.Behaviors>
+        </controls:SearchBar>
+        <ListView
+            Grid.Column="0"
+            Grid.Row="1"
+            CachingStrategy="RecycleElementAndDataTemplate"
+            ItemTemplate="{StaticResource PlayerViewCell}"
+            ItemsSource="{Binding Loader.Result}" />
+    </Grid>
 </views:BaseContentPage>

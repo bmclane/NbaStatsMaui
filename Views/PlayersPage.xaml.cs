@@ -1,3 +1,4 @@
+
 namespace NbaStatsMaui.Views;
 
 public partial class PlayersPage : BaseContentPage
@@ -10,4 +11,5 @@ public partial class PlayersPage : BaseContentPage
 
 		BindingContext = ViewModel = viewModel;
 	}
+
 }
