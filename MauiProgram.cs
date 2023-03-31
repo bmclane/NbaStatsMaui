@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NbaStatsMaui.Views;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
@@ -14,6 +15,7 @@ public static class MauiProgram
 			.UseMauiApp<App>()
             // Initialize the .NET MAUI Community Toolkit by adding the below line of code
             .UseMauiCommunityToolkit()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

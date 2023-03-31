@@ -8,7 +8,9 @@
     xmlns:m="clr-namespace:NbaStatsMaui.Models"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
     x:Class="NbaStatsMaui.Views.PlayersPage"
     Title="Find Players"
     x:DataType="vm:PlayersViewModel">
@@ -34,17 +36,6 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid ColumnDefinitions="*" RowDefinitions="Auto, *">
-        <!--<SearchBar
-            Grid.Row="0"
-            Grid.Column="0"
-            ios:SearchBar.SearchBarStyle="Minimal"
-            BackgroundColor="White"
-            Text="{Binding SearchText}"
-            SearchButtonPressed="SearchBar_SearchButtonPressed">
-            <SearchBar.Behaviors>
-                <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="TextChanged" />
-            </SearchBar.Behaviors>
-        </SearchBar>-->
         <controls:SearchBar
             Grid.Row="0"
             Grid.Column="0"
@@ -54,6 +45,15 @@
                 <toolkit:EventToCommandBehavior Command="{Binding Loader.ReloadCommand}" EventName="TextChanged" />
             </controls:SearchBar.Behaviors>
         </controls:SearchBar>
+        <skia:SKLottieView
+            Grid.Column="0"
+            Grid.Row="1"
+            Source="searching.json"
+            RepeatCount="-1"
+            HeightRequest="400"
+            WidthRequest="400"
+            HorizontalOptions="Center"
+            IsVisible="{Binding ShowLottieAnimation}"/>
         <ListView
             Grid.Column="0"
             Grid.Row="1"
