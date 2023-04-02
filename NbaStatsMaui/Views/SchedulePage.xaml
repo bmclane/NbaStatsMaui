@@ -5,7 +5,7 @@
     xmlns:views="clr-namespace:NbaStatsMaui.Views"
     xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
     xmlns:m="clr-namespace:NbaStatsMaui.Models"
-    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Maui.Skeleton"
     xmlns:skeletonViews="clr-namespace:NbaStatsMaui.Views.SkeletonViews"
     xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"

@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:NbaStatsMaui.Views"
     xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
     xmlns:m="clr-namespace:NbaStatsMaui.Models"
-    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Maui.Skeleton"
     xmlns:skeletonViews="clr-namespace:NbaStatsMaui.Views.SkeletonViews"
     xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
     x:Class="NbaStatsMaui.Views.TeamsPage"
@@ -32,7 +32,7 @@
     <taskLoader:TemplatedTaskLoader x:Name="GamesTaskLoader" TaskLoaderNotifier="{Binding Loader}">
         <taskLoader:TemplatedTaskLoader.LoadingControlTemplate>
             <ControlTemplate>
-                <CollectionView ItemsSource="{Static helpers:Skeletons.Teams}" Margin="0,0,0,80">
+                <CollectionView ItemsSource="{Static helpers:Skeletons.Teams}" Margin="0,0,0,0">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="3" />
                     </CollectionView.ItemsLayout>

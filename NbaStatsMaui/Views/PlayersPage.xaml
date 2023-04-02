@@ -7,7 +7,7 @@
     xmlns:vm="clr-namespace:NbaStatsMaui.ViewModels"
     xmlns:m="clr-namespace:NbaStatsMaui.Models"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Sharpnado.HorusSkeleton.Maui"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Maui.Skeleton"
     xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:taskLoader="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
@@ -53,7 +53,7 @@
             HeightRequest="400"
             WidthRequest="400"
             HorizontalOptions="Center"
-            IsVisible="{Binding ShowLottieAnimation}"/>
+            IsVisible="{Binding ShowLottieAnimation}" />
         <ListView
             Grid.Column="0"
             Grid.Row="1"
