@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
+using NbaStatsMaui.Views;
 using Sharpnado.TaskLoaderView;
 using System.Collections.ObjectModel;
 
@@ -27,6 +28,15 @@ public partial class ScheduleViewModel : BaseViewModel
                 dateSelected.IsSelected = false;
             }
         }
+    }
+
+    [RelayCommand]
+    private async void GoToGameDetails(Game item)
+    {
+        await Shell.Current.GoToAsync(nameof(GameDetailPage), true, new Dictionary<string, object>
+        {
+            { "Game", item }
+        });
     }
 
     public TaskLoaderNotifier<List<Game>> Loader { get; }

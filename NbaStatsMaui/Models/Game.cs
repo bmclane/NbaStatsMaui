@@ -76,6 +76,9 @@ public class Game
     [JsonIgnore]
     public bool Pregame => GameStatus == GameStatus.Pregame;
 
+    [JsonIgnore]
+    public string Title => $"{VisitorTeam.Abbreviation} at {HomeTeam.Abbreviation}";
+
     public Game(int id, DateTime date, int homeTeamId, Team homeTeam, int homeTeamScore, int period, bool postseason, int season, string status, string time, int visitorTeamId, Team visitorTeam, int visitorTeamScore)
     {
         Id = id;

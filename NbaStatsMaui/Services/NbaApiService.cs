@@ -33,7 +33,7 @@ public class NbaApiService : INbaApiService
 
     public async Task<ApiResponse<List<GameStats>>> GetGameStats(Game game)
     {
-        return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?game_ids[]={game.Id}");
+        return await httpClient.GetFromJsonAsync<ApiResponse<List<GameStats>>>(ServerUrl + $"stats?game_ids[]={game.Id}&per_page=100");
     }
 
     public async Task <ApiResponse<List<Game>>> GetTeamSchedule(Team team, int season = 2022)

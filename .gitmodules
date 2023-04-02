@@ -1,0 +1,4 @@
+[submodule "Maui.DataGrid"]
+	path = Maui.DataGrid
+	url = https://github.com/bmclane/Maui.DataGrid.git
+	branch = temporary-ios-fix

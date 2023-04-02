@@ -72,6 +72,9 @@ public class GameStats
     [JsonPropertyName("turnover")]
     public int Turnover { get; set; }
 
+    [JsonIgnore]
+    public string Fg3MA => $"{Fg3m}/{Fg3a}";
+
     public GameStats()
     { }
 

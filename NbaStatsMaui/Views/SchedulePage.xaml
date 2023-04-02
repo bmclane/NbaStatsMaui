@@ -28,6 +28,9 @@
             </toolkit:EnumToBoolConverter.TrueValues>
         </toolkit:EnumToBoolConverter>
 
+        <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+
+
         <Style x:Key="DefaultLabelStyle" TargetType="Label">
             <Setter Property="sk:Skeleton.IsBusy" Value="{Binding TaskLoaderNotifier.ShowLoader, Source={x:Reference GamesTaskLoader}}" />
             <Setter Property="sk:Skeleton.BackgroundColor" Value="{StaticResource Gray300}" />
@@ -202,7 +205,14 @@
                             <ListView
                                 CachingStrategy="RecycleElementAndDataTemplate"
                                 ItemTemplate="{StaticResource ScheduleViewCell}"
-                                ItemsSource="{Binding Loader.Result}" />
+                                ItemsSource="{Binding Loader.Result}">
+                                <ListView.Behaviors>
+                                    <toolkit:EventToCommandBehavior
+                                        Command="{Binding GoToGameDetailsCommand}"
+                                        EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"
+                                        EventName="ItemTapped" />
+                                </ListView.Behaviors>
+                            </ListView>
                         </RefreshView>
                     </ContentView>
                 </ControlTemplate>

@@ -97,6 +97,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Maui.DataGrid\Maui.DataGrid\Maui.DataGrid.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
 	  <MauiXaml Update="Controls\SearchBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

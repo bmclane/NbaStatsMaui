@@ -34,7 +34,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<TeamsViewModel>();
         builder.Services.AddSingleton<TeamsPage>();
         builder.Services.AddSingleton<PlayersViewModel>();
-        builder.Services.AddSingleton<PlayersPage>();
+        builder.Services.AddSingleton<PlayersPage>(); 
+        
+        builder.Services.AddTransient<GameDetailViewModel>();
+        builder.Services.AddTransient<GameDetailPage>();
 
         return builder.Build();
 	}
